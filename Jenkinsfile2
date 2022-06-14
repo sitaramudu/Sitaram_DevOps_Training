@@ -3,7 +3,7 @@ pipeline{
   stages{
     stage("Git Checkout"){
       steps{
-            git credentialsId: 'github', url: 'https://github.com/aditya-malviya/myweb.git'
+            git credentialsId: 'Javahome', url: 'https://github.com/sitaramudu/Sitaram_DevOps_Training.git'
            }
           }
      stage("Maven Build"){
@@ -14,13 +14,14 @@ pipeline{
             }
      stage("deploy-dev"){
        steps{
-          sshagent(['tomcat-dev1']) {
           sh """
+          sshagent(['tomcat-new']) {
           scp -o StrictHostKeyChecking=no target/myweb.war  
-          ubuntu@yourip:/opt/tomcat/webapps/
-          ssh ubuntu@yourip /opt/tomcat/bin/shutdown.sh
-          ssh ubuntu@yourip /opt/tomcat/bin/startup.sh
-           """
+          ubuntu@172.31.37.135:/opt/tomcat/webapps/
+          ssh ubuntu@172.31.37.135 /opt/tomcat/bin/shutdown.sh
+          ssh ubuntu@172.31.37.135 /opt/tomcat/bin/startup.sh
+          """
+}
             }
           }
         }
